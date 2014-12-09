@@ -1,66 +1,79 @@
 class Vending_machine
 
+	def initialize
+		@tango  = Product.new "Tango",  150.0, 20
+		@kitkat = Product.new "Kitkat", 200.0, 10
+		@pepsi  = Product.new "Pepsi",  100.0, 30
+	end
+
 	def change
-			{
-				"1p"	=> 10,
-				"2p" 	=> 10,
-				"5p" 	=> 10,
-				"10p" 	=> 10,
-				"20p" 	=> 8,
-				"50p" 	=> 8,
-				"£1" 	=> 5,
-				"£2" 	=> 5
-			}
+		{
+			"1p"	=> 10,
+			"2p" 	=> 10,
+			"5p" 	=> 10,
+			"10p" 	=> 10,
+			"20p" 	=> 8,
+			"50p" 	=> 8,
+			"£1" 	=> 5,
+			"£2" 	=> 5
+		}
 	end
 
 	def products
-		[
-			{product: {"Tango"	=> 150.0}, quantity: 20},
-			{product: {"Kit-Kat"=> 200.0}, quantity: 10},
-		 	{product: {"Pepsi" 	=> 100.0}, quantity: 30}
-		]
+			[@tango, @kitkat, @pepsi]
 	end
 
 	def products_names
-		products.map{|p|p[:product].keys}.flatten
+			products.map{|p| p.name}
 	end
 
-	def price(product)
-			p = products.select{|p| p[:product][product]}
-			p[0][:product][product]
+	def select(product)
+		products.select{|p|p.name == product}
+	end
+
+	def selected(product)
+		@selected = select(product)[0]
 	end
 
 	def quantity(product)
-		quantity = products.select{|p| p[:product][product]}
-		quantity[0][:quantity]
+		quantity = select(product)
+		quantity[0].quantity
+	end
+
+	def price(product)
+		p = select(product)
+		p[0].price
 	end
 
 	def convert(price)
-			if price.class == Fixnum || price.class == Float
-				return "#{price.to_i}p" if price < 100
-				return "£#{price.to_i/100}" if price >= 100
-			end
+		if price.class == Fixnum || price.class == Float
+			return "#{price.to_i}p" if price < 100
+			return "£#{price.to_i/100}" if price >= 100
+		end
 
-			if price.class == String
-				return price.to_f if price.include? "p"
-				return (price.delete("£").to_f)*100 if price.include? "£"
-			end
+		if price.class == String
+			return price.to_f if price.include? "p"
+			return (price.delete("£").to_f)*100 if price.include? "£"
+		end
 	end
 
-	def select(product, price)
-			new_price = convert(price)
+	def buy(product, amount)
+		new_price = convert(amount)
+
+		return "There are no more #{selected(product).name}" if remaining(product)==0
+		
 			if new_price == price(product)
-				return "Your product: " + product
+				selected(product).one_less
+				return "Your product:\n #{selected(product).name}"
 			end
 
 			if new_price > price(product)
 				change = convert(new_price - price(product))
-				return "Your product: #{product} - Change: #{change}"
+				return "Your product:\n #{selected(product).name}\nChange: #{change}"
 			end
+	end
 
-			if new_price < price(product)
-				amount = convert(price(product) - new_price)
-				return "Please insert another #{amount}"
-			end
+	def remaining(product)
+			selected(product).quantity
 	end
 end
