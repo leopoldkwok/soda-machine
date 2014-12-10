@@ -1,5 +1,7 @@
 class Soda_machine
 
+	attr_accessor :coins
+
 	# initilises products and coins in the soda machine
 
 	def initialize
@@ -9,7 +11,7 @@ class Soda_machine
 		@coins 	= Coins.new 1, 1, 1, 1, 1, 1, 1, 1
 	end
 
-	def coins
+	def available_coins
 		@soda_machine_coins = []
 		@coins.one_pence.times {@soda_machine_coins << 1}
 		@coins.two_pence.times {@soda_machine_coins << 2}
@@ -22,19 +24,6 @@ class Soda_machine
 		@soda_machine_coins
 	end
 
-
-	# def change
-	# 	{
-	# 		"1p"	=> 10,
-	# 		"2p" 	=> 10,
-	# 		"5p" 	=> 10,
-	# 		"10p" 	=> 10,
-	# 		"20p" 	=> 8,
-	# 		"50p" 	=> 8,
-	# 		"£1" 	=> 5,
-	# 		"£2" 	=> 5
-	# 	}
-	# end
 
 	def products
 			[@tango, @kitkat, @pepsi]
