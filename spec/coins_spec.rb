@@ -1,15 +1,16 @@
 require 'coins'
 
 describe Coins do 
-	let(:coins) {Coins.new 5, 5, 5, 5, 5, 5, 2, 2}
+	#quantity of coins in the soda machine
+	let(:coins) {Coins.new 2, 2, 2, 2, 2, 2, 2, 2}
 
 	it 'quantities' do 
-		expect(coins.one_pence).to eq 5
-		expect(coins.two_pence).to eq 5
-		expect(coins.five_pence).to eq 5
-		expect(coins.ten_pence).to eq 5
-		expect(coins.twenty_pence).to eq 5
-		expect(coins.fifty_pence).to eq 5
+		expect(coins.one_pence).to eq 2
+		expect(coins.two_pence).to eq 2
+		expect(coins.five_pence).to eq 2
+		expect(coins.ten_pence).to eq 2
+		expect(coins.twenty_pence).to eq 2
+		expect(coins.fifty_pence).to eq 2
 		expect(coins.one_pound).to eq 2
 		expect(coins.two_pounds).to eq 2
 	end
@@ -23,5 +24,23 @@ describe Coins do
 		expect(coins.values["50p"]).to eq 50
 		expect(coins.values["£1"]).to eq 100
 	end
+
+	it 'can calculate total amount' do 
+		expect(coins.total).to eq 776
+	end
+
+	it 'can calculate the change' do
+		expect(coins.change(1)).to eq [1]
+		expect(coins.change(11)).to eq [10,1]
+		expect(coins.change(12)).to eq [10,2]
+		expect(coins.change(150)).to eq [100,50]
+	end
+
+	it 'when the soda machine receives payment the quantity of its cash increases' do 
+		coins.receive("1p")
+		expect(coins.one_pence).to eq 3
+	end
+
+
 
 end

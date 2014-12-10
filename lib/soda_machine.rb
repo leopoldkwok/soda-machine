@@ -1,8 +1,8 @@
-class Vending_machine
+class Soda_machine
 
 	def initialize
 		@tango  = Product.new "Tango",  150.0, 20
-		@kitkat = Product.new "Kitkat", 200.0, 10
+		@kitkat = Product.new "Coke", 	200.0, 10
 		@pepsi  = Product.new "Pepsi",  100.0, 30
 	end
 
@@ -44,6 +44,8 @@ class Vending_machine
 		p = select(product)
 		p[0].price
 	end
+
+
 
 	def convert(price)
 		if price.class == Fixnum || price.class == Float
