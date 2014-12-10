@@ -1,5 +1,6 @@
 require 'soda_machine'
 require 'product'
+require 'coins'
 
 describe Soda_machine do 
 	let(:soda_machine) 		{Soda_machine.new}
@@ -9,6 +10,10 @@ describe Soda_machine do
 
 
 	context 'When created' do
+
+		it 'contains coins when created' do 
+			expect(soda_machine.coins).to eq [1, 2, 5, 10, 20, 50, 100, 200]
+		end
 		
 		it 'contains products' do 
 			expect(soda_machine.products_names).to eq ["Tango", "Coke", "Pepsi"]
@@ -17,6 +22,8 @@ describe Soda_machine do
 		it 'products have a price' do 
 			expect(soda_machine.price("Tango")).to eq 150
 		end
+
+
 
 		# need to place in another class
 

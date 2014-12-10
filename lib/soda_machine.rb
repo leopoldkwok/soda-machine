@@ -1,23 +1,40 @@
 class Soda_machine
 
+	# initilises products and coins in the soda machine
+
 	def initialize
 		@tango  = Product.new "Tango",  150.0, 20
 		@kitkat = Product.new "Coke", 	200.0, 10
 		@pepsi  = Product.new "Pepsi",  100.0, 30
+		@coins 	= Coins.new 1, 1, 1, 1, 1, 1, 1, 1
 	end
 
-	def change
-		{
-			"1p"	=> 10,
-			"2p" 	=> 10,
-			"5p" 	=> 10,
-			"10p" 	=> 10,
-			"20p" 	=> 8,
-			"50p" 	=> 8,
-			"£1" 	=> 5,
-			"£2" 	=> 5
-		}
+	def coins
+		@soda_machine_coins = []
+		@coins.one_pence.times {@soda_machine_coins << 1}
+		@coins.two_pence.times {@soda_machine_coins << 2}
+		@coins.five_pence.times {@soda_machine_coins << 5}
+		@coins.ten_pence.times {@soda_machine_coins << 10}
+		@coins.twenty_pence.times {@soda_machine_coins << 20}
+		@coins.fifty_pence.times {@soda_machine_coins << 50}
+		@coins.one_pound.times {@soda_machine_coins << 100}
+		@coins.two_pounds.times {@soda_machine_coins << 200}
+		@soda_machine_coins
 	end
+
+
+	# def change
+	# 	{
+	# 		"1p"	=> 10,
+	# 		"2p" 	=> 10,
+	# 		"5p" 	=> 10,
+	# 		"10p" 	=> 10,
+	# 		"20p" 	=> 8,
+	# 		"50p" 	=> 8,
+	# 		"£1" 	=> 5,
+	# 		"£2" 	=> 5
+	# 	}
+	# end
 
 	def products
 			[@tango, @kitkat, @pepsi]
@@ -47,15 +64,15 @@ class Soda_machine
 
 
 
-	def convert(price)
-		if price.class == Fixnum || price.class == Float
-			return "#{price.to_i}p" if price < 100
-			return "£#{price.to_i/100}" if price >= 100
+	def convert(cash)
+		if cash.class == Fixnum || cash.class == Float
+			return "#{cash.to_i}p" if cash < 100
+			return "£#{cash.to_i/100}" if cash >= 100
 		end
 
-		if price.class == String
-			return price.to_f if price.include? "p"
-			return (price.delete("£").to_f)*100 if price.include? "£"
+		if cash.class == String
+			return cash.to_f if cash.include? "p"
+			return (cash.delete("£").to_f)*100 if cash.include? "£"
 		end
 	end
 
@@ -78,4 +95,6 @@ class Soda_machine
 	def remaining(product)
 			selected(product).quantity
 	end
+
+	
 end

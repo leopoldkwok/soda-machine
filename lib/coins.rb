@@ -43,7 +43,7 @@ class Coins
 			end
 
 			coins << coin
-			remaining_amount = remaining_amount - coin
+			remaining_amount -= coin
 			end
 		coins
 	end 
