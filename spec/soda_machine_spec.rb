@@ -52,9 +52,9 @@ describe Soda_machine do
 
 		it 'add the value to the total coins' do 
 			soda_machine.buy("Tango","£1.5")
-			expect(soda_machine.coins.fifty_pence).to eq 1
-			expect(soda_machine.coins.one_pound).to eq 1
-			expect(soda_machine.coins.total).to eq 388
+			expect(soda_machine.coins.fifty_pence).to eq 2
+			expect(soda_machine.coins.one_pound).to eq 2
+			expect(soda_machine.coins.total).to eq 538
 
 		end
 	end

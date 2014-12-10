@@ -72,6 +72,7 @@ class Soda_machine
 		
 			if new_price == price(product)
 				selected(product).one_less
+				@coins.receive(amount)
 				return "Your product:\n #{selected(product).name}"
 			end
 
